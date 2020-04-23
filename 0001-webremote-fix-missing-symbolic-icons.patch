@@ -1,0 +1,54 @@
+From 5c68da138867501e524aac53ed809c5cfe49ea65 Mon Sep 17 00:00:00 2001
+From: crvi <crvisqr@gmail.com>
+Date: Wed, 22 Jan 2020 14:13:57 +0530
+Subject: [PATCH] webremote: fix missing symbolic icons
+
+Fixes: #1758
+---
+ plugins/webremote/js/webremote.js | 2 +-
+ plugins/webremote/webremote.html  | 2 +-
+ plugins/webremote/webremote.py    | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/plugins/webremote/js/webremote.js b/plugins/webremote/js/webremote.js
+index 5cc0de0ab..6b113f248 100644
+--- a/plugins/webremote/js/webremote.js
++++ b/plugins/webremote/js/webremote.js
+@@ -215,7 +215,7 @@ var connect = function() {
+ 				imgsrc = path + "?" + sign(path);
+ 				imgclass = "albumart";
+ 			} else {
+-				imgsrc = "/icon/rhythmbox-symbolic/128";
++				imgsrc = "/icon/org.gnome.Rhythmbox-symbolic/128";
+ 				imgclass = "noalbumart";
+ 			}
+ 			replaceImage("trackimage", imgclass, imgsrc);
+diff --git a/plugins/webremote/webremote.html b/plugins/webremote/webremote.html
+index 3e4f9445e..1ed507bf6 100644
+--- a/plugins/webremote/webremote.html
++++ b/plugins/webremote/webremote.html
+@@ -12,7 +12,7 @@
+ 
+ 		<div class="pure-u-1-1">
+ 			<div id="trackimage">
+-				<img class="noalbumart" src="/icon/rhythmbox-symbolic/128">
++				<img class="noalbumart" src="/icon/org.gnome.Rhythmbox-symbolic/128">
+ 			</div>
+ 		</div>
+ 
+diff --git a/plugins/webremote/webremote.py b/plugins/webremote/webremote.py
+index 561cccd06..9b9ef63cf 100644
+--- a/plugins/webremote/webremote.py
++++ b/plugins/webremote/webremote.py
+@@ -455,7 +455,7 @@ class WebRemotePlugin(GObject.Object, Peas.Activatable):
+ 			msg.set_status(404)
+ 			return
+ 
+-		if re.match("/icon/[a-z-]+/[0-9]+", path) is None:
++		if re.match("/icon/[a-zA-Z.-]+/[0-9]+", path) is None:
+ 			msg.set_status(404)
+ 			return
+ 
+-- 
+2.26.0
+

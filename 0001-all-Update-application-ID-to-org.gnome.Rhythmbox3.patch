@@ -1,0 +1,278 @@
+From c51588ae5002aae6e2f63051e57be71b326812ca Mon Sep 17 00:00:00 2001
+From: Bastien Nocera <hadess@hadess.net>
+Date: Thu, 23 Apr 2020 14:28:17 +0200
+Subject: [PATCH] all: Update application ID to org.gnome.Rhythmbox3
+
+The D-Bus service and the Flathub Flatpak were already using
+org.gnome.Rhythmbox as the application ID. Rename the appdata,
+desktop and application icons to match that app-id.
+---
+ configure.ac                                           |  2 +-
+ data/Makefile.am                                       | 10 +++++-----
+ data/icons/hicolor/scalable/apps/Makefile.am           |  4 ++--
+ ...-symbolic.svg => org.gnome.Rhythmbox3-symbolic.svg} |  0
+ ...rg.gnome.Rhythmbox.svg => org.gnome.Rhythmbox3.svg} |  0
+ ...data.xml.in => org.gnome.Rhythmbox3.appdata.xml.in} |  2 +-
+ ...esktop.in.in => org.gnome.Rhythmbox3.desktop.in.in} |  2 +-
+ data/rhythmbox-device.desktop.in.in                    |  2 +-
+ plugins/mpris/rb-mpris-plugin.c                        |  4 ++--
+ plugins/notification/rb-notification-plugin.c          |  2 +-
+ plugins/rbzeitgeist/rbzeitgeist.py                     |  4 ++--
+ plugins/webremote/js/webremote.js                      |  2 +-
+ plugins/webremote/webremote.html                       |  2 +-
+ po/POTFILES.in                                         |  4 ++--
+ po/POTFILES.skip                                       |  4 ++--
+ shell/rb-application.c                                 |  2 +-
+ 16 files changed, 23 insertions(+), 23 deletions(-)
+ rename data/icons/hicolor/scalable/apps/{org.gnome.Rhythmbox-symbolic.svg => org.gnome.Rhythmbox3-symbolic.svg} (100%)
+ rename data/icons/hicolor/scalable/apps/{org.gnome.Rhythmbox.svg => org.gnome.Rhythmbox3.svg} (100%)
+ rename data/{rhythmbox.appdata.xml.in => org.gnome.Rhythmbox3.appdata.xml.in} (99%)
+ rename data/{rhythmbox.desktop.in.in => org.gnome.Rhythmbox3.desktop.in.in} (97%)
+
+diff --git a/configure.ac b/configure.ac
+index 9e1ffa42d..8d94a0572 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -667,7 +667,7 @@ widgets/Makefile
+ podcast/Makefile
+ shell/Makefile
+ data/Makefile
+-data/rhythmbox.desktop.in
++data/org.gnome.Rhythmbox3.desktop.in
+ data/rhythmbox-device.desktop.in
+ data/ui/Makefile
+ data/icons/Makefile
+diff --git a/data/Makefile.am b/data/Makefile.am
+index 9f427982f..215c4aab3 100644
+--- a/data/Makefile.am
++++ b/data/Makefile.am
+@@ -4,7 +4,7 @@ SUBDIRS = ui icons
+ @INTLTOOL_DESKTOP_RULE@
+ 
+ Multimediadir = $(datadir)/applications
+-Multimedia_in_files = rhythmbox.desktop.in rhythmbox-device.desktop.in
++Multimedia_in_files = org.gnome.Rhythmbox3.desktop.in rhythmbox-device.desktop.in
+ Multimedia_DATA = $(Multimedia_in_files:.desktop.in=.desktop)
+ 
+ playlists_in_files = playlists.xml.in
+@@ -34,7 +34,7 @@ service_DATA = $(service_in_files:.service.in=.service)
+ 
+ appdatadir = $(datadir)/metainfo
+ appdata_DATA = $(appdata_in_files:.xml.in=.xml)
+-appdata_in_files = rhythmbox.appdata.xml.in
++appdata_in_files = org.gnome.Rhythmbox3.appdata.xml.in
+ 
+ # Rule to make the service file with bindir expanded
+ $(service_DATA): $(service_in_files) Makefile
+@@ -60,15 +60,15 @@ EXTRA_DIST = $(service_in_files)    \
+ 	     $(playlists_in_files)  \
+ 	     $(profiles_DATA)       \
+ 	     $(appdata_in_files)    \
+-	     rhythmbox.desktop.in.in \
++	     org.gnome.Rhythmbox3.desktop.in.in \
+ 	     rhythmbox-device.desktop.in.in
+ 
+ CLEANFILES = 					\
+-	rhythmbox.desktop			\
++	org.gnome.Rhythmbox3.desktop			\
+ 	rhythmbox-device.desktop		\
+ 	org.gnome.Rhythmbox3.service		\
+ 	playlists.xml				\
+-	rhythmbox.desktop.in			\
++	org.gnome.Rhythmbox3.desktop.in			\
+ 	rhythmbox-device.desktop.in		\
+ 	gschemas.compiled			\
+ 	$(appdata_DATA)
+diff --git a/data/icons/hicolor/scalable/apps/Makefile.am b/data/icons/hicolor/scalable/apps/Makefile.am
+index 587e5ab73..14aa24851 100644
+--- a/data/icons/hicolor/scalable/apps/Makefile.am
++++ b/data/icons/hicolor/scalable/apps/Makefile.am
+@@ -5,8 +5,8 @@ context = apps
+ iconsdir = $(themedir)/$(size)/$(context)
+ 
+ icons_DATA = \
+-	org.gnome.Rhythmbox.svg \
+-	org.gnome.Rhythmbox-symbolic.svg
++	org.gnome.Rhythmbox3.svg \
++	org.gnome.Rhythmbox3-symbolic.svg
+ 
+ noinst_DATA =
+ 
+diff --git a/data/icons/hicolor/scalable/apps/org.gnome.Rhythmbox-symbolic.svg b/data/icons/hicolor/scalable/apps/org.gnome.Rhythmbox3-symbolic.svg
+similarity index 100%
+rename from data/icons/hicolor/scalable/apps/org.gnome.Rhythmbox-symbolic.svg
+rename to data/icons/hicolor/scalable/apps/org.gnome.Rhythmbox3-symbolic.svg
+diff --git a/data/icons/hicolor/scalable/apps/org.gnome.Rhythmbox.svg b/data/icons/hicolor/scalable/apps/org.gnome.Rhythmbox3.svg
+similarity index 100%
+rename from data/icons/hicolor/scalable/apps/org.gnome.Rhythmbox.svg
+rename to data/icons/hicolor/scalable/apps/org.gnome.Rhythmbox3.svg
+diff --git a/data/rhythmbox.appdata.xml.in b/data/org.gnome.Rhythmbox3.appdata.xml.in
+similarity index 99%
+rename from data/rhythmbox.appdata.xml.in
+rename to data/org.gnome.Rhythmbox3.appdata.xml.in
+index 3a6aff020..ac714bc98 100644
+--- a/data/rhythmbox.appdata.xml.in
++++ b/data/org.gnome.Rhythmbox3.appdata.xml.in
+@@ -2,7 +2,7 @@
+ <!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+ <!-- Copyright 2014 Jonathan Matthew <jonathan@d14n.org> -->
+ <component type="desktop">
+-  <id>rhythmbox.desktop</id>
++  <id>org.gnome.Rhythmbox3.desktop</id>
+   <metadata_license>CC0-1.0</metadata_license>
+   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
+   <_name>Rhythmbox</_name>
+diff --git a/data/rhythmbox.desktop.in.in b/data/org.gnome.Rhythmbox3.desktop.in.in
+similarity index 97%
+rename from data/rhythmbox.desktop.in.in
+rename to data/org.gnome.Rhythmbox3.desktop.in.in
+index d17a03e49..47bc596e4 100644
+--- a/data/rhythmbox.desktop.in.in
++++ b/data/org.gnome.Rhythmbox3.desktop.in.in
+@@ -7,7 +7,7 @@ _Keywords=Audio;Song;MP3;CD;Podcast;MTP;iPod;Playlist;Last.fm;UPnP;DLNA;Radio;
+ Exec=rhythmbox %U
+ Terminal=false
+ Type=Application
+-Icon=org.gnome.Rhythmbox
++Icon=org.gnome.Rhythmbox3
+ X-GNOME-DocPath=rhythmbox/rhythmbox.xml
+ Categories=GNOME;GTK;AudioVideo;Audio;Player;
+ MimeType=application/x-ogg;application/ogg;audio/x-vorbis+ogg;audio/vorbis;audio/x-vorbis;audio/x-scpls;audio/x-mp3;audio/x-mpeg;audio/mpeg;audio/x-mpegurl;audio/x-flac;audio/mp4;audio/x-it;audio/x-mod;audio/x-s3m;audio/x-stm;audio/x-xm;
+diff --git a/data/rhythmbox-device.desktop.in.in b/data/rhythmbox-device.desktop.in.in
+index 5d000f8ef..857a12dc2 100644
+--- a/data/rhythmbox-device.desktop.in.in
++++ b/data/rhythmbox-device.desktop.in.in
+@@ -7,7 +7,7 @@ Exec=rhythmbox-client --select-source %U
+ Terminal=false
+ NoDisplay=true
+ Type=Application
+-Icon=org.gnome.Rhythmbox
++Icon=org.gnome.Rhythmbox3
+ X-GNOME-DocPath=rhythmbox/rhythmbox.xml
+ Categories=GNOME;GTK;AudioVideo;
+ MimeType=x-content/audio-player;x-content/audio-cdda;
+diff --git a/plugins/mpris/rb-mpris-plugin.c b/plugins/mpris/rb-mpris-plugin.c
+index a51735bd2..fdafb6f2d 100644
+--- a/plugins/mpris/rb-mpris-plugin.c
++++ b/plugins/mpris/rb-mpris-plugin.c
+@@ -291,9 +291,9 @@ get_root_property (GDBusConnection *connection,
+ 		char *path;
+ 
+ #ifdef USE_UNINSTALLED_DIRS
+-		path = g_build_filename (SHARE_UNINSTALLED_BUILDDIR, "rhythmbox.desktop", NULL);
++		path = g_build_filename (SHARE_UNINSTALLED_BUILDDIR, "org.gnome.Rhythmbox3.desktop", NULL);
+ #else
+-		path = g_build_filename (DATADIR, "applications", "rhythmbox.desktop", NULL);
++		path = g_build_filename (DATADIR, "applications", "org.gnome.Rhythmbox3.desktop", NULL);
+ #endif
+ 		if (path != NULL) {
+ 			char *basename;
+diff --git a/plugins/notification/rb-notification-plugin.c b/plugins/notification/rb-notification-plugin.c
+index 2d3d0cb50..a9bde68f2 100644
+--- a/plugins/notification/rb-notification-plugin.c
++++ b/plugins/notification/rb-notification-plugin.c
+@@ -206,7 +206,7 @@ do_notify (RBNotificationPlugin *plugin,
+         if (playback)
+         	notify_notification_set_category (notification, "x-gnome.music");
+         notify_notification_set_hint (notification, "desktop-entry",
+-                                      g_variant_new_string ("rhythmbox"));
++                                      g_variant_new_string ("org.gnome.Rhythmbox3"));
+ 
+ 	notify_notification_clear_actions (notification);
+ 	if (playback && plugin->notify_supports_actions) {
+diff --git a/plugins/rbzeitgeist/rbzeitgeist.py b/plugins/rbzeitgeist/rbzeitgeist.py
+index 6bba195c8..b9df2663b 100644
+--- a/plugins/rbzeitgeist/rbzeitgeist.py
++++ b/plugins/rbzeitgeist/rbzeitgeist.py
+@@ -68,7 +68,7 @@ class ZeitgeistPlugin(GObject.Object, Peas.Activatable):
+             event = Zeitgeist.Event.new()
+             event.set_property("interpretation", "Source Registration")
+             event.set_property("manifestation", Zeitgeist.USER_ACTIVITY)
+-            event.set_property("actor", "application://rhythmbox.desktop")
++            event.set_property("actor", "application://org.gnome.Rhythmbox3.desktop")
+ 
+             datasource = Zeitgeist.DataSource.new()
+             datasource.set_unique_id("org.gnome.Rhythmbox3,dataprovider")
+@@ -165,7 +165,7 @@ class ZeitgeistPlugin(GObject.Object, Peas.Activatable):
+             event.set_property("timestamp", int(time.time()*1000))
+             event.set_property("interpretation", str(event_type))
+             event.set_property("manifestation", str(manifest))
+-            event.set_property("actor", "application://rhythmbox.desktop")
++            event.set_property("actor", "application://org.gnome.Rhythmbox3.desktop")
+             event.add_subject(subject)
+ 
+             logger.insert_event(event)
+diff --git a/plugins/webremote/js/webremote.js b/plugins/webremote/js/webremote.js
+index 6b113f248..98088d99c 100644
+--- a/plugins/webremote/js/webremote.js
++++ b/plugins/webremote/js/webremote.js
+@@ -215,7 +215,7 @@ var connect = function() {
+ 				imgsrc = path + "?" + sign(path);
+ 				imgclass = "albumart";
+ 			} else {
+-				imgsrc = "/icon/org.gnome.Rhythmbox-symbolic/128";
++				imgsrc = "/icon/org.gnome.Rhythmbox3-symbolic/128";
+ 				imgclass = "noalbumart";
+ 			}
+ 			replaceImage("trackimage", imgclass, imgsrc);
+diff --git a/plugins/webremote/webremote.html b/plugins/webremote/webremote.html
+index 1ed507bf6..346e11d95 100644
+--- a/plugins/webremote/webremote.html
++++ b/plugins/webremote/webremote.html
+@@ -12,7 +12,7 @@
+ 
+ 		<div class="pure-u-1-1">
+ 			<div id="trackimage">
+-				<img class="noalbumart" src="/icon/org.gnome.Rhythmbox-symbolic/128">
++				<img class="noalbumart" src="/icon/org.gnome.Rhythmbox3-symbolic/128">
+ 			</div>
+ 		</div>
+ 
+diff --git a/po/POTFILES.in b/po/POTFILES.in
+index 88190b12c..9e865d4c3 100644
+--- a/po/POTFILES.in
++++ b/po/POTFILES.in
+@@ -4,8 +4,8 @@ backends/gstreamer/rb-player-gst.c
+ backends/gstreamer/rb-player-gst-xfade.c
+ backends/rb-player.c
+ data/playlists.xml.in
+-data/rhythmbox.appdata.xml.in
+-data/rhythmbox.desktop.in.in
++data/org.gnome.Rhythmbox3.appdata.xml.in
++data/org.gnome.Rhythmbox3.desktop.in.in
+ data/rhythmbox-device.desktop.in.in
+ [type: gettext/glade]data/ui/app-menu.ui
+ [type: gettext/glade]data/ui/browser-popup.ui
+diff --git a/po/POTFILES.skip b/po/POTFILES.skip
+index c63ccce68..fd281a5ca 100644
+--- a/po/POTFILES.skip
++++ b/po/POTFILES.skip
+@@ -1,10 +1,10 @@
+ # List of source files that should NOT be translated.
+ # Please keep this file sorted alphabetically.
+-data/rhythmbox.desktop.in
++data/org.gnome.Rhythmbox3.desktop.in
+ data/rhythmbox-device.desktop.in
+ data/org.gnome.rhythmbox.gschema.xml
+ 
+ # these entries work around an intltool bug so distcheck passes
+ # https://bugs.launchpad.net/intltool/+bug/1117944
+-sub/data/rhythmbox.desktop.in
++sub/data/org.gnome.Rhythmbox3.desktop.in
+ sub/data/rhythmbox-device.desktop.in
+diff --git a/shell/rb-application.c b/shell/rb-application.c
+index 37afb36fb..b138e989b 100644
+--- a/shell/rb-application.c
++++ b/shell/rb-application.c
+@@ -205,7 +205,7 @@ about_action_cb (GSimpleAction *action, GVariant *parameters, gpointer user_data
+ 			       "authors", (const char **) authors,
+ 			       "documenters", (const char **) documenters,
+ 			       "translator-credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
+-			       "logo-icon-name", "org.gnome.Rhythmbox",
++			       "logo-icon-name", "org.gnome.Rhythmbox3",
+ 			       NULL);
+ 	g_string_free (comment, TRUE);
+ 	g_free (license_trans);
+-- 
+2.26.0
+

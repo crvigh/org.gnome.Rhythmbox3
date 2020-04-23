@@ -5,10 +5,6 @@
     "default-branch": "stable",
     "sdk": "org.gnome.Sdk",
     "command": "rhythmbox",
-    "rename-appdata-file": "rhythmbox.appdata.xml",
-    "rename-desktop-file": "rhythmbox.desktop",
-    "rename-icon": "org.gnome.Rhythmbox",
-    "copy-icon": true,
     "tags": [],
     "finish-args": [
         /* X11 + XShm access */
@@ -146,6 +142,21 @@
                     "url": "https://gitlab.gnome.org/GNOME/rhythmbox.git",
                     "tag": "v3.4.4",
                     "commit": "473a28752bfd6260d74f41e3b0d737f71495f4a8"
+                },
+                {
+                    "type": "patch",
+                    "use-git-am": true,
+                    "path": "0001-Fix-broken-application-icon-in-About-dialog.patch"
+                },
+                {
+                    "type": "patch",
+                    "use-git-am": true,
+                    "path": "0001-webremote-fix-missing-symbolic-icons.patch"
+                },
+                {
+                    "type": "patch",
+                    "use-git-am": true,
+                    "path": "0001-all-Update-application-ID-to-org.gnome.Rhythmbox3.patch"
                 }
             ]
         }
